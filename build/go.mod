@@ -2,7 +2,7 @@ module github.com/anchore/go-cache/buildtools
 
 go 1.21
 
-require github.com/kzantow/go-build v0.0.0-20240918175348-905a72c16bea
+require github.com/kzantow/go-build v0.0.0-20240919140200-afcb8df9db31
 
 require (
 	github.com/kr/text v0.2.0 // indirect

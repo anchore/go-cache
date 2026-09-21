@@ -7,40 +7,32 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
+permissions: {}
+
+# every job here is a single `make <task>`, defined in .make/main.go, so each
+# check runs locally under the same name.
 
 jobs:
   Static-Analysis:
+    name: "Static analysis"
     runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
+      # setup checkout, go, go-make, binny, and cache go modules
+      - uses: anchore/go-make/.github/actions/setup@fa5421b3bf24c9d18f11a736c5eb4172f2b7d683 # v0.8.1
 
-      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6.3.0
-        with:
-          go-version-file: build/go.mod
-          cache-dependency-path: build/go.sum
-
-      - run: make static-analysis
+      - name: Run static analysis
+        run: make static-analysis
 
   Unit-Test:
+    name: "Unit tests"
     runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
+      # setup checkout, go, go-make, binny, and cache go modules
+      - uses: anchore/go-make/.github/actions/setup@fa5421b3bf24c9d18f11a736c5eb4172f2b7d683 # v0.8.1
 
-      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6.3.0
-        with:
-          go-version-file: go.mod
-          cache-dependency-path: |
-            go.sum
-            build/go.sum
-
-      - run: make test
+      - name: Run unit tests
+        run: make unit

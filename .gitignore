@@ -1,2 +1,5 @@
 /.idea/
+
+# tools and aux data installed by go-make / binny
 /.tool/
+/.tmp/
